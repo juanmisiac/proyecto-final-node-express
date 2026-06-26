@@ -1,26 +1,20 @@
 import { Router } from "express";
-
-import { getAllProducts } from "../controllers/products.controllers.js";
-import { getProductsById } from "../controllers/products.controllers.js";
-import { postProduct } from "../controllers/products.controllers.js";
-import { deleteProduct } from "../controllers/products.controllers.js";
+import {
+  getAllProducts,
+  getProductsById,
+  postProduct,
+  deleteProduct
+} from "../controllers/products.controllers.js";
+import { auth } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.get("/", (req, res) => {
-  getAllProducts();
-})
+router.get("/", getAllProducts);
 
-router.get("/:id", (req, res) => {
-  getProductsById();
-})
+router.get("/:id", getProductsById);
 
-router.post("/create", (req, res) => {
-  postProduct();
-})
+router.post("/create", auth, postProduct);
 
-router.delete("/:id", (req, res) => {
-  deleteProduct();
-})
+router.delete("/:id", auth, deleteProduct);
 
 export default router;

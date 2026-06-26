@@ -10,16 +10,6 @@ import {
 
 const productsCollection = collection(db, 'products');
 
-// Método para buscar una figurita por su ID
-export async function getProductById(id) {
-  const productDoc = await getDoc(doc(productsCollection, id));
-  if (productDoc.exists()) {
-    return { id: productDoc.id, ...productDoc.data() };
-  } else {
-    return null;
-  }
-};
-
 // Método para obtener todas las figuritas
 export async function getAllProducts() {
   const querySnapshot = await getDocs(productsCollection);
@@ -28,6 +18,16 @@ export async function getAllProducts() {
     products.push({ id: documento.id, ...documento.data() });
   });
   return products;
+};
+
+// Método para buscar una figurita por su ID
+export async function getProductById(id) {
+  const productDoc = await getDoc(doc(productsCollection, id));
+  if (productDoc.exists()) {
+    return { id: productDoc.id, ...productDoc.data() };
+  } else {
+    return null;
+  }
 };
 
 // Método para guardar una nueva figurita

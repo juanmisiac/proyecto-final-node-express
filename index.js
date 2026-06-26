@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import productsRouter from "./src/routes/products.routes.js";
+import authRouter from "./src/routes/auth.routes.js";
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json())
 
 // RUTAS
 app.use("/api/products", productsRouter);
+app.use("/api/auth", authRouter);
 
 app.use((req, res, next) => {
   res.status(404).send('Not found/No encontrado');
