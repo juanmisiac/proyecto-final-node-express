@@ -26,3 +26,11 @@ export const postProductService = async (product) => {
     throw error;
   }
 }
+
+export const deleteProductService = async (id) => {
+  try {
+    await productModel.deleteProduct(id);
+  } catch (error) {
+    throw error;
+  }
+}

@@ -1,6 +1,7 @@
 import { getProductsService } from "../services/products.services.js";
 import { getProductsByIdService } from "../services/products.services.js";
 import { postProductService } from "../services/products.services.js";
+import { deleteProductService } from "../services/products.services.js";
 
 // Procesar solicitud -> Generar respuesta
 export const getAllProducts = async (req, res) => {
@@ -42,7 +43,7 @@ export const postProduct = async (req, res) => {
   }
   try {
     const response = await postProductService(newProduct);
-    res.status(200).json({ message: "Producto creado." });
+    res.status(201).json({ message: "Producto creado." });
   } catch (error) {
     res.status(500).json({
       message: "Error interno del servidor.",
@@ -51,6 +52,18 @@ export const postProduct = async (req, res) => {
   }
 }
 
-export const deleteProduct = () => {
-
+export const deleteProduct = async (req, res) => {
+  const id = req.params.id;
+  try {
+    await deleteProductService(id);
+    res.status(200).json({
+      message: "Figurita eliminada correctamente.",
+      id: id
+    })
+  } catch (error) {
+    res.status(500).json({
+      message: "Error al intentar eliminar la figurita.",
+      error: error.message
+    })
+  }
 }
