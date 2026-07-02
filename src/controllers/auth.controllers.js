@@ -1,14 +1,5 @@
 import { generateToken } from "../utils/token.generator.js";
 
-// PASAR user AL .env !!!
-const user = {
-  id: 1,
-  name: "Juan",
-  email: "juanmisiac@gmail.com",
-  password: "messi123",
-  admin: true,
-};
-
 export const login = (req, res) => {
   const { email, password } = req.body;
 
@@ -18,13 +9,18 @@ export const login = (req, res) => {
     });
   };
 
-  if (email !== user.email || password !== user.password) {
+  if (email !== process.env.ADMIN_EMAIL || password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({
       message: "Credenciales invalidas",
     });
   };
 
-  const token = generateToken(user);
+  const tokenPayload = {
+    email: process.env.ADMIN_EMAIL,
+    admin: true
+  };
+
+  const token = generateToken(tokenPayload);
 
   res.json({
     message: "Login exitoso",
